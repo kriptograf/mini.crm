@@ -13,6 +13,9 @@ build:
 migrate:
 	docker-compose run --rm backend yii migrate
 
+seed:
+	docker-compose run --rm backend yii seed
+
 nuxt-dev:
 	yarn dev
 
