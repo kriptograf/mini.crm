@@ -9,6 +9,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use kartik\sidenav\SideNav;
 
 AppAsset::register($this);
 ?>
@@ -60,11 +61,27 @@ AppAsset::register($this);
 
 <main role="main" class="flex-shrink-0">
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+        <div class="row">
+            <div class="col-3">
+                <?php  echo SideNav::widget([
+                        'bsVersion' => 4,
+                        'type' => 'default',
+                        'encodeLabels' => false,
+                        'items' => [
+                            ['label' => 'Пользователи', 'icon' => 'home', 'url' => ['/users'], 'active' => Yii::$app->controller->module->id === 'users'],
+                            ['label' => 'Заявки', 'icon' => 'user', 'url' => ['/bids'], 'active' => false],
+                           ],
+                        ]); ?>
+            </div>
+            <div class="col-9">
+                <?= Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]) ?>
+                <?= Alert::widget() ?>
+                <?= $content ?>
+            </div>
+        </div>
+
     </div>
 </main>
 
