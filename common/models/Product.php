@@ -11,7 +11,7 @@ use Yii;
  * @property string|null $title
  * @property float|null $price
  *
- * @property Bid[] $bs
+ * @property Bid[] $bids
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -51,7 +51,7 @@ class Product extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getBs()
+    public function getBids(): \yii\db\ActiveQuery
     {
         return $this->hasMany(Bid::class, ['product_id' => 'id']);
     }

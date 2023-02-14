@@ -26,7 +26,7 @@ class Bid extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'bid';
     }
@@ -34,7 +34,7 @@ class Bid extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['user_id', 'product_id', 'status'], 'integer'],
@@ -49,7 +49,7 @@ class Bid extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -70,7 +70,7 @@ class Bid extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProduct()
+    public function getProduct(): \yii\db\ActiveQuery
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
@@ -80,7 +80,7 @@ class Bid extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getUser(): \yii\db\ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
