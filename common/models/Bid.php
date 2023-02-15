@@ -59,41 +59,55 @@ class Bid extends \yii\db\ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'product_id' => 'Товар',
-            'title' => 'Название заявки',
+            'id'          => 'ID',
+            'user_id'     => 'User ID',
+            'product_id'  => 'Товар',
+            'title'       => 'Название заявки',
             'client_name' => 'Имя клиента',
-            'phone' => 'Телефон',
-            'comment' => 'Комментарий',
-            'status' => 'Статус',
-            'created_at' => 'Дата создания',
-            'updated_at' => 'Дата изменения',
+            'phone'       => 'Телефон',
+            'comment'     => 'Комментарий',
+            'status'      => 'Статус',
+            'created_at'  => 'Дата создания',
+            'updated_at'  => 'Дата изменения',
         ];
     }
 
+    /**
+     * @return array[]
+     * @author Виталий Москвин <foreach@mail.ru>
+     */
     public function behaviors(): array
     {
         return [
-          [
-              'class' => TimestampBehavior::class,
-              'createdAtAttribute' => 'created_at',
-              'updatedAtAttribute' => 'updated_at',
-              'value' => new Expression('NOW()'),
-          ],
-      ];
+            [
+                'class'              => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value'              => new Expression('NOW()'),
+            ],
+        ];
     }
 
-    public static function listStatus()
+    /**
+     * Список статусов
+     * @return string[]
+     * @author Виталий Москвин <foreach@mail.ru>
+     */
+    public static function listStatus(): array
     {
         return [
-            self::STATUS_NEW => 'Новая',
-            self::STATUS_APPLY => 'Принята',
+            self::STATUS_NEW    => 'Новая',
+            self::STATUS_APPLY  => 'Принята',
             self::STATUS_REJECT => 'Отказана',
             self::STATUS_DEFECT => 'Брак',
         ];
     }
 
+    /**
+     * Человекопонятное отображение статуса
+     * @return string
+     * @author Виталий Москвин <foreach@mail.ru>
+     */
     public function humanStatus(): string
     {
         $statuses = static::listStatus();
