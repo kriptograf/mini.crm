@@ -24,7 +24,7 @@ class UsersTableSeeder implements ITableSeeder
      */
     public function run()
     {
-        \Yii::$app->db->createCommand()->truncateTable(User::tableName())->execute();
+        \Yii::$app->db->createCommand()->truncateTable(User::tableName())->checkIntegrity(false)->execute();
 
         $items = $this->getData();
 
