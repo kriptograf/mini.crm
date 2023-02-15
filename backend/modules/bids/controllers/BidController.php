@@ -2,6 +2,7 @@
 
 namespace app\modules\bids\controllers;
 
+use Carbon\Carbon;
 use common\models\Bid;
 use common\models\Product;
 use yii\data\ActiveDataProvider;
@@ -10,6 +11,7 @@ use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii2tech\csvgrid\CsvGrid;
 
 /**
  * BidController implements the CRUD actions for Bid model.
@@ -191,6 +193,48 @@ class BidController extends Controller
         }
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Экспорт в CSV
+     *
+     * Наименование заявки, товар, цена, телефон
+     *
+     * @return \yii\web\Response
+     * @throws \yii\base\InvalidConfigException
+     * @author Виталий Москвин <foreach@mail.ru>
+     */
+    public function actionExport(): \yii\web\Response
+    {
+        $date = Carbon::now()->format('Y-m-d');
+        $exporter = new CsvGrid([
+            'dataProvider' => new ActiveDataProvider([
+                'query' => Bid::find(),
+            ]),
+            'columns' => [
+                [
+                    'attribute' => 'title',
+                ],
+                [
+                    'attribute' => 'product_id',
+                    'value' => function ($model) {
+                        return $model->product->title;
+                    },
+                ],
+                [
+                    'attribute' => 'price',
+                    'header' => 'Цена',
+                    'value' => function ($model) {
+                        return $model->product->price;
+                    },
+                ],
+                [
+                    'attribute' => 'phone',
+                ],
+            ],
+        ]);
+
+        return $exporter->export()->send('bids.' . $date . '.csv');
     }
 
     /**

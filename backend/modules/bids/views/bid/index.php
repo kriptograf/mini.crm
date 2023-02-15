@@ -14,7 +14,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bid-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="row">
+        <div class="col-9">
+            <h1><?= Html::encode($this->title) ?></h1>
+        </div>
+        <div class="col-3">
+            <?= Html::a('Экспорт в CSV', ['export'], ['class' => 'btn btn-outline-success', 'download']) ?>
+        </div>
+    </div>
+
 
     <?php Pjax::begin(); ?>
 
