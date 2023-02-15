@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "bid".
@@ -23,6 +25,11 @@ use Yii;
  */
 class Bid extends \yii\db\ActiveRecord
 {
+    const STATUS_NEW = 0;
+    const STATUS_APPLY = 1;
+    const STATUS_REJECT = 2;
+    const STATUS_DEFECT = 3;
+
     /**
      * {@inheritdoc}
      */
@@ -52,17 +59,60 @@ class Bid extends \yii\db\ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'product_id' => 'Product ID',
-            'title' => 'Title',
-            'client_name' => 'Client Name',
-            'phone' => 'Phone',
-            'comment' => 'Comment',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'id'          => 'ID',
+            'user_id'     => 'User ID',
+            'product_id'  => 'Товар',
+            'title'       => 'Название заявки',
+            'client_name' => 'Имя клиента',
+            'phone'       => 'Телефон',
+            'comment'     => 'Комментарий',
+            'status'      => 'Статус',
+            'created_at'  => 'Дата создания',
+            'updated_at'  => 'Дата изменения',
         ];
+    }
+
+    /**
+     * @return array[]
+     * @author Виталий Москвин <foreach@mail.ru>
+     */
+    public function behaviors(): array
+    {
+        return [
+            [
+                'class'              => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value'              => new Expression('NOW()'),
+            ],
+        ];
+    }
+
+    /**
+     * Список статусов
+     * @return string[]
+     * @author Виталий Москвин <foreach@mail.ru>
+     */
+    public static function listStatus(): array
+    {
+        return [
+            self::STATUS_NEW    => 'Новая',
+            self::STATUS_APPLY  => 'Принята',
+            self::STATUS_REJECT => 'Отказана',
+            self::STATUS_DEFECT => 'Брак',
+        ];
+    }
+
+    /**
+     * Человекопонятное отображение статуса
+     * @return string
+     * @author Виталий Москвин <foreach@mail.ru>
+     */
+    public function humanStatus(): string
+    {
+        $statuses = static::listStatus();
+
+        return $statuses[$this->status];
     }
 
     /**

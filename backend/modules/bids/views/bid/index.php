@@ -29,12 +29,32 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'client_name',
             'title',
-            'product_id',
+            [
+                    'attribute' => 'product_id',
+                    'value' => function ($model) {
+                        return $model->product->title;
+                    }
+            ],
             'phone',
             'created_at',
-            'status',
-            'comment:ntext',
-            //'price',
+            [
+                    'attribute' => 'status',
+                    'value' => function ($model) {
+                        return $model->humanStatus();
+                    }
+            ],
+            [
+                    'attribute' => 'comment',
+                    'value' => function ($model) {
+                        return \yii\helpers\StringHelper::truncateWords($model->comment, 6);
+                    }
+            ],
+            [
+                'attribute' => 'price',
+                'value' => function ($model) {
+                    return $model->product->price;
+                }
+            ],
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Bid $model, $key, $index, $column) {

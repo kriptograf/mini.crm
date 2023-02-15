@@ -15,13 +15,9 @@ class SeedController extends Controller
     public function actionIndex(): int
     {
         try {
-            \Yii::$app->db->createCommand('SET foreign_key_checks = 0;')->execute();
-
             (new ProductTableSeeder())->run();
             (new RolesTableSeeder())->run();
             (new UsersTableSeeder())->run();
-
-            \Yii::$app->db->createCommand('SET foreign_key_checks = 1;')->execute();
 
             $this->stdout('Тестовые данные успешно добавлены!' . PHP_EOL);
         } catch(\Throwable $e) {

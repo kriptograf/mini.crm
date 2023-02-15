@@ -71,7 +71,7 @@ docker-compose run --rm backend php /app/init
 
 Adjust the components['db'] configuration in common/config/main-local.php accordingly.
 ```php
-'dsn' => 'mysql:host=mysql;dbname=yii2advanced',
+'dsn' => 'pgsql:host=pgsql;dbname=yii2advanced',
 'username' => 'yii2advanced',
 'password' => 'secret'
 ```
