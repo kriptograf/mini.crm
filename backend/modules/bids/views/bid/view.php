@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var common\models\Bid $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Bids', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Заявки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -16,11 +16,29 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Принять', ['apply', 'id' => $model->id], [
+            'class' => 'btn btn-outline-success',
+            'data' => [
+                'method' => 'post',
+            ],
+        ]) ?>
+        <?= Html::a('Отклонить', ['reject', 'id' => $model->id], [
+            'class' => 'btn btn-outline-warning',
+            'data' => [
+                'method' => 'post',
+            ],
+        ]) ?>
+        <?= Html::a('Брак', ['defect', 'id' => $model->id], [
+            'class' => 'btn btn-outline-danger',
+            'data' => [
+                'method' => 'post',
+            ],
+        ]) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы действительно хотите удалить заявку?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,13 +48,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'user_id',
-            'product_id',
+            [
+                    'attribute' => 'product_id',
+                    'value' => function ($model) {
+                        return $model->product->title;
+                    }
+            ],
             'title',
             'client_name',
             'phone',
             'comment:ntext',
-            'status',
+            [
+                    'attribute' => 'status',
+                    'value' => function ($model) {
+                        return $model->humanStatus();
+                    }
+            ],
             'created_at',
             'updated_at',
         ],
