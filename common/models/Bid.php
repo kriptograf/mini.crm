@@ -2,9 +2,11 @@
 
 namespace common\models;
 
+use backend\modules\bids\models\HistoryBids;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use yii\helpers\VarDumper;
 
 /**
  * This is the model class for table "bid".
@@ -45,6 +47,7 @@ class Bid extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'product_id', 'status'], 'integer'],
+            [['product_id', 'status'], 'filter', 'filter' => 'intval'],
             [['comment'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['title', 'client_name', 'phone'], 'string', 'max' => 255],
@@ -86,6 +89,18 @@ class Bid extends \yii\db\ActiveRecord
                 'value'              => new Expression('NOW()'),
             ],
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!$insert) {
+            HistoryBids::writeHistory($this->id, $changedAttributes, $this->attributes);
+        }
+
+        parent::afterSave($insert, $changedAttributes);
     }
 
     /**

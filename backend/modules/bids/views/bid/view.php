@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('История изменений', ['/bids/history/index', 'id' => $model->id], ['class' => 'btn btn-outline-info']) ?>
     </p>
 
     <?= DetailView::widget([

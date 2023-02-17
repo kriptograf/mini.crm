@@ -7,6 +7,7 @@ use common\models\Bid;
 use common\models\Product;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
@@ -92,8 +93,12 @@ class BidController extends Controller
 
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            //echo VarDumper::dump($model->getDirtyAttributes(), 10, true);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
