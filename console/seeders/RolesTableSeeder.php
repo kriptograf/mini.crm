@@ -21,10 +21,10 @@ class RolesTableSeeder implements ITableSeeder
      */
     public function run()
     {
-        \Yii::$app->db->createCommand()->truncateTable('auth_assignment')->execute();
-        \Yii::$app->db->createCommand()->truncateTable('auth_item_child')->execute();
-        \Yii::$app->db->createCommand()->truncateTable('auth_item')->execute();
-        \Yii::$app->db->createCommand()->truncateTable('auth_rule')->execute();
+        \Yii::$app->db->createCommand()->truncateTable('auth_assignment')->checkIntegrity(false)->execute();
+        \Yii::$app->db->createCommand()->truncateTable('auth_item_child')->checkIntegrity(false)->execute();
+        \Yii::$app->db->createCommand()->truncateTable('auth_item')->checkIntegrity(false)->execute();
+        \Yii::$app->db->createCommand()->truncateTable('auth_rule')->checkIntegrity(false)->execute();
 
         /** @var \yii\rbac\DbManager $auth */
         $auth = Yii::$app->authManager;

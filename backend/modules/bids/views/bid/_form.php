@@ -12,26 +12,32 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <div class="mb-4">
+    <?= $form->field($model, 'product_id')->dropDownList($products, ['text' => 'Выберите товар', 'options' => ['value' => 'none', 'class' => 'prompt', 'label' => 'Выберите']]) ?>
+    </div>
 
-    <?= $form->field($model, 'product_id')->textInput() ?>
-
+    <div class="mb-4">
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    </div>
 
+    <div class="mb-4">
     <?= $form->field($model, 'client_name')->textInput(['maxlength' => true]) ?>
+    </div>
 
+    <div class="mb-4">
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+    </div>
 
+    <div class="mb-4">
     <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
+    </div>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <div class=mb-4">
+    <?= $form->field($model, 'status')->dropDownList(\common\models\Bid::listStatus(), ['text' => 'Выберите статус', 'options' => ['value' => 'none', 'class' => 'prompt', 'label' => 'Select']]) ?>
+    </div>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <div class="mb-4 pt-5">
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

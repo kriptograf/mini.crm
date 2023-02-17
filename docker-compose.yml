@@ -22,19 +22,19 @@ services:
       # Mount source-code for development
       - ./:/app
 
-  mysql:
-    image: mysql:5.7
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${DB_DATABASE}
-      - MYSQL_USER=${DB_USERNAME}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-    volumes:
-        - ./.data:/var/lib/mysql
+#  mysql:
+#    image: mysql:5.7
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+#      - MYSQL_DATABASE=${DB_DATABASE}
+#      - MYSQL_USER=${DB_USERNAME}
+#      - MYSQL_PASSWORD=${DB_PASSWORD}
+#    volumes:
+#        - ./.data:/var/lib/mysql
 
-  #pgsql:
-  #  image: postgres:9.5
-  #  environment:
-  #    - POSTGRES_DB=yii2advanced
-  #    - POSTGRES_USER=yii2advanced
-  #    - POSTGRES_PASSWORD=secret
+  pgsql:
+    image: postgres:9.5
+    environment:
+      - POSTGRES_DB=yii2advanced
+      - POSTGRES_USER=yii2advanced
+      - POSTGRES_PASSWORD=secret

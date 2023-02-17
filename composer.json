@@ -21,7 +21,8 @@
         "yii2mod/yii2-helpers": "*",
         "nesbot/carbon": "^2.66",
         "kartik-v/yii2-widget-sidenav": "dev-master",
-        "yiisoft/yii2-bootstrap4": "^2.0"
+        "yiisoft/yii2-bootstrap4": "^2.0",
+        "yii2tech/csv-grid": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

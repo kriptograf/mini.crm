@@ -20,7 +20,7 @@ class ProductTableSeeder implements ITableSeeder
      */
     public function run()
     {
-        \Yii::$app->db->createCommand()->truncateTable(Product::tableName())->execute();
+        \Yii::$app->db->createCommand()->truncateTable(Product::tableName())->checkIntegrity(false)->execute();
 
         $items = $this->getData();
 

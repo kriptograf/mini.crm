@@ -14,11 +14,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bid-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="row">
+        <div class="col-9">
+            <h1><?= Html::encode($this->title) ?></h1>
+        </div>
+        <div class="col-3">
+            <?= Html::a('Экспорт в CSV', ['export'], ['class' => 'btn btn-outline-success', 'download']) ?>
+        </div>
+    </div>
 
-    <p>
-        <?= Html::a('Создать заявку', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?php Pjax::begin(); ?>
 
@@ -29,12 +33,33 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'client_name',
             'title',
-            'product_id',
+            [
+                    'attribute' => 'product_id',
+                    'value' => function ($model) {
+                        return $model->product->title;
+                    }
+            ],
             'phone',
             'created_at',
-            'status',
-            'comment:ntext',
-            //'price',
+            [
+                    'attribute' => 'status',
+                    'value' => function ($model) {
+                        return $model->humanStatus();
+                    }
+            ],
+            [
+                    'attribute' => 'comment',
+                    'value' => function ($model) {
+                        return \yii\helpers\StringHelper::truncateWords($model->comment, 6);
+                    }
+            ],
+            [
+                'label' => 'Цена',
+                'attribute' => 'price',
+                'value' => function ($model) {
+                    return $model->product->price;
+                }
+            ],
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Bid $model, $key, $index, $column) {

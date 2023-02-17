@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Bid $model */
+/** @var backend\modules\bids\models\HistoryBids $model */
 
-$this->title = 'Create Bid';
-$this->params['breadcrumbs'][] = ['label' => 'Bids', 'url' => ['index']];
+$this->title = 'Create History Bids';
+$this->params['breadcrumbs'][] = ['label' => 'History Bids', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="bid-create">
+<div class="history-bids-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
